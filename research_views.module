@@ -1,0 +1,70 @@
+<?php
+// $Id: research_views.module,v 1.114 2010/09/15 03:41:58 sun Exp $
+
+/**
+ * @file
+ * Menu paths and access callbacks to embed research_views
+ * This tiny module was created to avoid using default views arguments
+ * to specify the researcher uid (ie to secure view) and to hide the menu entry
+ * for non researchers
+ *
+ * Complements 'repo_researcher' feature
+ */
+
+/**
+ * Implements hook_help().
+ */
+function research_views_help($path, $arg) {
+  switch ($path) {
+    case 'admin/settings/research_views':
+      return t('Menu paths and access callbacks to embed research_views');
+
+    case 'admin/help#research_views':
+      $output = '';
+      $output .= '<p>'. t('Menu paths and access callbacks to embed research_views') .'</p>';
+      return $output;
+  }
+}
+
+/**
+ * Implements hook_permission().
+ */
+function research_views_permission() {
+  return array(
+    'access my-research' => array(
+      'title' => t('Access my-research'),
+      'description' => t("Access 'my-research' view"),
+    ),
+  );
+}
+
+
+
+/**
+ * Implements hook_menu().
+ */
+function research_views_menu() {
+  // Menu link callbacks.
+  $items['my-research'] = array(
+    'page callback' => 'research_views_view_myresearch',
+    //'access callback' => 'research_views_access_myresearch',
+    'access arguments' => array('access my-research'),
+    'type' => MENU_CALLBACK,
+    'file' => 'research_views.inc',
+  );
+  return $items;
+}
+
+/*
+ * Currently dealt with by default access callback (user_access)
+ * should more complex access check be required:
+function research_views_access_myresearch () {
+  global $user;
+  // is the logged in user a researcher? (or root user)
+  if (in_array('researcher', $user->roles) || $user->uid == 1) { 
+    return TRUE;
+  }
+}
+*/
+
+
