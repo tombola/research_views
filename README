@@ -1,0 +1,9 @@
+Menu paths and access callbacks to embed research_views
+This tiny module was created to avoid using default views arguments
+to specify the researcher uid (ie to secure view) and to hide the menu entry
+for non researchers
+
+Dependent on 'repo_researcher' feature as uses view defined 'therein'
+
+
+It could easily be extended to allow for more complex access control.
